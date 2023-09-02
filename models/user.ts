@@ -1,10 +1,15 @@
-import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import mongoose,{ Document, model, models } from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
     username: { type: String , require:true },
     password: { type: String , require:true },
 });
+
+export interface IUser extends Document {
+    username: string,
+    password: string,
+}
 
 UserSchema.statics.signup = async function({ username , password }){
     if(!username || !password){throw Error("All Fields must be filled")}
@@ -30,7 +35,4 @@ UserSchema.statics.login = async function(username,password){
     }
 }
 
-
-const UserModel = mongoose.model("User", UserSchema);
-
-export default UserModel;
+export default models.Users || model<IUser>('Users', UserSchema);

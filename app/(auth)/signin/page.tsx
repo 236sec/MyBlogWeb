@@ -1,20 +1,58 @@
 "use client";
+import axios from "axios";
 import Link from "next/link"
 import { useState } from "react";
 
-export default function LoginForm() {
+interface User {
+    username : string,
+    password : string,
+}
+
+export default function SignUpForm() {
     const [username , setUsername] = useState("");
     const [password , setPassword] = useState("");
     const [error , setError ] = useState("");
 
-    const handleSubmit = (e:React.SyntheticEvent) => {
+    const handleSubmit = async (e:React.SyntheticEvent) => {
         e.preventDefault();
         if(!username || !password){
             setError("All Field Must Be Field.");
             return
         }
-    }
+        try{
+            const data : User = {
+                username,
+                password
+            };
+            const res = await axios({
+                method: 'get',
+                url: '/api/login',
+                data : JSON.stringify(data),
+                headers: {
+                    "Content-Type":'application/json',
+                }
+              });
+            if(res.status == 201){
+                setUsername('');
+                setPassword('');
+                setError('');
+            }else{
+                alert("User Login Failed")
+            }
 
+            
+        }catch(error){
+            if (axios.isAxiosError(error)) {
+                const axiosError = error as any;
+                const err = axiosError.response.data.message ? axiosError.response.data.message : "Internal Server Error";
+                setError(err);
+                console.log(axiosError.response.status);
+              }else {
+                // Handle the case where error.response is undefined
+                console.error('No response from the server');
+              }
+        }
+    }
     return (
         <div className="bg-white text-black mx-auto w-96 p-6">
             <h1 className="text-xl">Login To Your Account</h1>
@@ -27,4 +65,5 @@ export default function LoginForm() {
             {error && <div className="bg-red-700 text-white rounded-md p-2 text-sm">Error : {error}</div>}
         </div>
     )
+    
 }
