@@ -2,16 +2,20 @@
 import axios from "axios";
 import Link from "next/link"
 import { useState } from "react";
+import { useSession, signIn, signOut } from "next-auth/react"
+import { useRouter } from "next/navigation";
+
 
 interface User {
     username : string,
     password : string,
 }
 
-export default function SignUpForm() {
+export default function SignInForm() {
     const [username , setUsername] = useState("");
     const [password , setPassword] = useState("");
     const [error , setError ] = useState("");
+    const router = useRouter();
 
     const handleSubmit = async (e:React.SyntheticEvent) => {
         e.preventDefault();
@@ -20,37 +24,18 @@ export default function SignUpForm() {
             return
         }
         try{
-            const data : User = {
+            const res = await signIn("credentials",{
                 username,
-                password
-            };
-            const res = await axios({
-                method: 'get',
-                url: '/api/login',
-                data : JSON.stringify(data),
-                headers: {
-                    "Content-Type":'application/json',
-                }
-              });
-            if(res.status == 201){
-                setUsername('');
-                setPassword('');
-                setError('');
-            }else{
-                alert("User Login Failed")
+                password,
+                redirect:false,
+            })
+            if(res.error){
+                setError("Invalid Credentials");
+                return
             }
-
-            
+            router.replace("dashboard");
         }catch(error){
-            if (axios.isAxiosError(error)) {
-                const axiosError = error as any;
-                const err = axiosError.response.data.message ? axiosError.response.data.message : "Internal Server Error";
-                setError(err);
-                console.log(axiosError.response.status);
-              }else {
-                // Handle the case where error.response is undefined
-                console.error('No response from the server');
-              }
+            console.log(error);
         }
     }
     return (

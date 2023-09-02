@@ -1,7 +1,9 @@
 "use client";
 import axios from "axios";
 import Link from "next/link"
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+
 
 interface User {
     username : string,
@@ -12,6 +14,7 @@ export default function SignUpForm() {
     const [username , setUsername] = useState("");
     const [password , setPassword] = useState("");
     const [error , setError ] = useState("");
+    const router = useRouter();
 
     const handleSubmit = async (e:React.SyntheticEvent) => {
         e.preventDefault();
@@ -36,6 +39,7 @@ export default function SignUpForm() {
                 setUsername('');
                 setPassword('');
                 setError('');
+                router.push('/signin');
             }else{
                 alert("User Register Failed")
             }
