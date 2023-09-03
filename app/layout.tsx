@@ -1,7 +1,11 @@
+"use client";
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import AuthProvider from './hooks/Providers'
+import AuthProvider from './hooks/SessionProviders'
+import NavBar from './components/Navbars'
+import ThemeProviderHook from "./hooks/ThemeProviders";
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,13 +19,19 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
+
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <AuthProvider>
-            {children}
-        </AuthProvider>
-      </body>
-    </html>
+      <html lang="en">
+        <body className={`${inter.className} dark:bg-[#000000] bg-white w-screen h-screen`}>
+            <AuthProvider>
+              <ThemeProviderHook>
+                <NavBar />
+                {children}
+              </ThemeProviderHook>
+            </AuthProvider>
+        </body>
+      </html>
+    
   )
 }

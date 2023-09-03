@@ -1,26 +1,29 @@
 import type { Config } from 'tailwindcss'
 
-const config: Config = {
+
+const config : Config = {
+  darkMode: 'class',
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    darkMode: 'class',
     colors: {
       'primary_light': '#3FA037',
       'secondary_light': '#FEFEFE',
       'primary_variants_light': '#4DB33D',
-      'light':"#FFFFFF",
-      'black':"#121212",
-      'white':"#FFFFFF",
-      "red":"#B34045",
-      'primary_dark': '#f1f5f9',
+      'light': '#f1f5f9',
+      'black': '#121212',
+      'white': '#FFFFFF',
+      "red": '#B34045',
+      "sky":"#38bdf8",
+      'primary_dark': '#0ea5e9',
       'secondary_dark': '#03DAC6',
-      'primary_variants_dark': '#0ea5e9',
+      'primary_variants_dark': '#f1f5f9',
     },
     extend: {
+      colors:{},
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -29,5 +32,6 @@ const config: Config = {
     },
   },
   plugins: [],
-}
-export default config
+};
+
+export default config;
