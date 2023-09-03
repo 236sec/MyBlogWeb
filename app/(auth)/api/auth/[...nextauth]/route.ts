@@ -8,7 +8,7 @@ interface UserCredentials {
     password : string,
 }
 
-const authOptions = {
+export const authOptions = {
     providers: [
         CredentialsProvider({
             name:"credentials",
@@ -18,6 +18,7 @@ const authOptions = {
                 try{
                     await connectMongoDB();
                     const user = await User.login(username,password);
+                    console.log(user);
                     return user;
                 } catch (error) {
                     console.log(error);
@@ -27,6 +28,7 @@ const authOptions = {
     ],
     session: {
         strategy: "jwt",
+        jwt: true,
     },
     secret: process.env.NEXTAUTH_SECRET,
     pages: {
@@ -34,6 +36,6 @@ const authOptions = {
     },
 };
 
-const handler = NextAuth(authOptions);
+const handler = NextAuth(authOptions as any);
 
 export { handler as GET, handler as POST};

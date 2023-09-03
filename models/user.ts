@@ -11,7 +11,7 @@ export interface IUser extends Document {
     password: string,
 }
 
-UserSchema.statics.signup = async function({ username , password }){
+UserSchema.statics.signup = async function({ username , password } : IUser){
     if(!username || !password){throw Error("All Fields must be filled")}
     const exits = await this.findOne({username});
     if (exits){ throw Error("This username has already used") };
@@ -26,7 +26,7 @@ UserSchema.statics.login = async function(username,password){
     const userDoc = await this.findOne({username});
     if (userDoc){
         if(bcrypt.compareSync(password, userDoc.password)){
-            return userDoc
+            return userDoc;
         }else{
             throw Error("Incorrect Password");
         }
