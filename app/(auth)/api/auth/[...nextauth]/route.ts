@@ -12,12 +12,18 @@ export const authOptions = {
     providers: [
         CredentialsProvider({
             name:"credentials",
-            credentials: {},
+            credentials: {
+                username: { label: "Username", type: "text", placeholder: "jsmith" },
+                password: { label: "Password", type: "password" }
+            },
             async authorize(credentials) {
                 const { username , password } : UserCredentials = credentials as UserCredentials;
+                
                 try{
                     await connectMongoDB();
-                    const user = await User.login(username,password);
+                    //const user = await User.login(username,password);
+                    //const user = { username:String(username) ,id:"123129i932593989423" ,email:"sompon.o@ku.th" };
+                    const user = {name:"jsmith", email:"Bestnaja"};
                     console.log(user);
                     return user;
                 } catch (error) {
@@ -31,9 +37,9 @@ export const authOptions = {
         jwt: true,
     },
     secret: process.env.NEXTAUTH_SECRET,
-    pages: {
-        signIn: "/login",
-    },
+    //pages: {
+    //    signIn: "/login",
+    //},
 };
 
 const handler = NextAuth(authOptions as any);
