@@ -24,16 +24,14 @@ export const authOptions = {
             name:"credentials",
             credentials: {
                 username: { label: "Username", type: "text", placeholder: "jsmith" },
-                password: { label: "Password", type: "password" }
+                password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
-                const { username , password } : UserCredentials = credentials as UserCredentials;
+                const { username ,  password } : UserCredentials = credentials as UserCredentials;
                 
                 try{
                     await connectMongoDB();
-                    //const user = await User.login(username,password);
-                    //const user = { username:String(username) ,id:"123129i932593989423" ,email:"sompon.o@ku.th" };
-                    const user = {name:"jsmith", email:"Bestnaja"};
+                    const user = await User.login(username,password);
                     console.log(user);
                     return user;
                 } catch (error) {
@@ -54,24 +52,40 @@ export const authOptions = {
             }
             return true // Do different verification for other providers that don't have `email_verified`
           },
-        async jwt({ token, account }) {
-            // Persist the OAuth access_token to the token right after signin
-            if (account) {
-              token.accessToken = account.access_token
+        async jwt({ token, user ,account ,trigger , session}) {
+          //update user name
+            if(trigger === "update" && session?.name){
+              token.name = session.name;
+              //will update the user name in the database
+              
             }
-            console.log(token,account);
-            return token
+            // Persist the OAuth access_token to the token right after signin
+            if (user) {
+              return {
+                ...token,
+                id: user.id,
+                accessToken: account?.accessToken,
+              }
+            }
+            return token;
           },
           async session({ session, token, user }) {
             // Send properties to the client, like an access_token from a provider.
-            session.accessToken = token.accessToken
-            console.log(session,token,user);
-            return session
+            console.log("Session CALLBACK ",token);
+            return {
+              ...session,
+              user: {
+                ...session.user,
+                id: token.id,
+                name: token.name,
+              }
+            }
           },
       },
     //pages: {
     //    signIn: "/login",
     //},
+    debug: process.env.NODE_ENV === "development",
 };
 
 const handler = NextAuth(authOptions as any);
