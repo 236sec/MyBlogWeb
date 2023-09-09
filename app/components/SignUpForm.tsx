@@ -33,14 +33,7 @@ export default function SignUpForm(){
                 name,
                 email,
             };
-            const res = await axios({
-                method: 'post',
-                url: '/api/register',
-                data : JSON.stringify(data),
-                headers: {
-                    "Content-Type":'application/json',
-                }
-              });
+            const res : any = axios.post('/api/register',data);
             if(res.status == 201){
                 setUsername('');
                 setPassword('');

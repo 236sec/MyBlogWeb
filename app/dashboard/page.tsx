@@ -14,7 +14,7 @@ export default function DashBoardPage(){
             <input type="text" className="w-64" value={newName} onChange={(e) => setNewName(e.target.value)} />
             <button className="bg-primary_light rounded-md p-3" onClick={() => update({name : newName})}>Update Name</button>
             <button className="bg-primary_light rounded-md p-3" onClick={() => {console.log(session)}}>Log Session</button>
-            <button className="bg-primary_light rounded-md p-3" onClick={() => signOut()}>Sign out</button>
+            <button className="bg-primary_light rounded-md p-3 dark:text-white" onClick={() => signOut()}>Sign out</button>
         </div>
     </div>
     )

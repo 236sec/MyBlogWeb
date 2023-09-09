@@ -1,27 +1,35 @@
-"use client";
-import { useState, useEffect } from 'react'
-import { useTheme } from 'next-themes'
+import React, { useState } from 'react';
+import { ThemeProvider, CssBaseline, Switch, IconButton } from '@mui/material';
+import { Brightness4, Brightness7 } from '@mui/icons-material';
+import { lightTheme, darkTheme } from '../hooks/ThemeProvider'; // Import your custom themes
+import { useEffect } from 'react';
 
 const ThemeSwitch = () => {
-  const [mounted, setMounted] = useState(false)
-  const { theme, setTheme } = useTheme()
+  const [theme, setTheme] = useState(lightTheme);
 
-  // useEffect only runs on the client, so now we can safely show the UI
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    if (!(theme.palette.mode == 'light')) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
 
-  if (!mounted) {
-    return null
-  }
+  const toggleTheme = () => {
+    setTheme(theme.palette.mode === 'light' ? darkTheme : lightTheme);
+  };
 
   return (
-    <select value={theme} onChange={e => setTheme(e.target.value)}>
-      <option value="system">System</option>
-      <option value="dark">Dark</option>
-      <option value="light">Light</option>
-    </select>
-  )
-}
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div>
+        <IconButton onClick={toggleTheme}>
+          {theme.palette.mode === 'light' ? <Brightness4 /> : <Brightness7 />}
+        </IconButton>
+        <Switch checked={theme.palette.mode === 'dark'} onChange={toggleTheme} />
+      </div>
+    </ThemeProvider>
+  );
+};
 
-export default ThemeSwitch
+export default ThemeSwitch;
