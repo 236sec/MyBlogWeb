@@ -3,6 +3,7 @@ import User from "@/models/user";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
 interface UserCredentials { 
     username : string, 
@@ -11,6 +12,10 @@ interface UserCredentials {
 
 export const authOptions = {
     providers: [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+          }),
         GitHubProvider({
             clientId: process.env.GITHUB_ID,
             clientSecret: process.env.GITHUB_SECRET
@@ -43,6 +48,12 @@ export const authOptions = {
     },
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
+        async signIn({ account, profile }) {
+            if (account.provider === "google") {
+              return profile.email_verified && profile.email.endsWith("@gmail.com")
+            }
+            return true // Do different verification for other providers that don't have `email_verified`
+          },
         async jwt({ token, account }) {
             // Persist the OAuth access_token to the token right after signin
             if (account) {
