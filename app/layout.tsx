@@ -3,8 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import AuthProvider from './hooks/SessionProviders'
 import NavBar from './components/Navbars'
-import { ThemeProvider } from '@mui/material/styles';
-import { lightTheme } from './hooks/ThemeProvider'
+import { ThemeProviderCustom } from './hooks/ThemeProvider';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,15 +18,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
 
-
   return (
       <html lang="en">
         <body className={`${inter.className} dark:bg-[#000000] bg-white w-screen h-screen`}>
             <AuthProvider>
-              <ThemeProvider theme={lightTheme}>
+              <ThemeProviderCustom>
                 <NavBar />
                 {children}
-              </ThemeProvider>
+              </ThemeProviderCustom>
             </AuthProvider>
         </body>
       </html>
