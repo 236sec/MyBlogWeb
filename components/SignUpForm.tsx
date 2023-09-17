@@ -71,7 +71,7 @@ export default function SignUpForm(){
                 <input type="password" name="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} className="border-black border-2 text-xl p-1 pl-2 rounded-md mb-2"></input>
                 <input type="submit" className="p-1 border-2 rounded-xl text-xl text-white bg-primary_variants_light dark:bg-sky dark:hover:bg-[#0369a1] hover:cursor-pointer hover:bg-primary_light border-black w-24"/>
             </form>
-            {<div className="bg-red text-white rounded-md p-2 text-sm">Error : {error ? error : "Hello"}</div>}
+            {error ? <div className="bg-red text-white rounded-md p-2 text-sm">Error : {error}</div> : null}
         </div>
     )
 }

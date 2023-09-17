@@ -23,6 +23,10 @@ const config : Config = {
       'primary_variants_dark': '#f1f5f9',
     },
     extend: {
+      fontFamily: {
+        satoshi: ['Satoshi', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
+      },
       colors:{},
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

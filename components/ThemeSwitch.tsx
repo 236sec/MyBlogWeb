@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { ThemeProvider, CssBaseline, Switch, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useColorMode } from '../hooks/ThemeProvider';
+import { useColorMode } from '../utils/hooks/ThemeProvider';
 import { useTheme } from '@mui/material';
 
 const ThemeSwitch = () => {
-  const { toggleColorMode } = useColorMode();
+  const { toggleColorMode } = useColorMode() as any;
   const theme = useTheme();
 
 

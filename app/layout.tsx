@@ -1,9 +1,9 @@
-import './globals.css'
+import '../styles/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import AuthProvider from './hooks/SessionProviders'
-import NavBar from './components/Navbars'
-import { ThemeProviderCustom } from './hooks/ThemeProvider';
+import AuthProvider from '../utils/hooks/SessionProviders'
+import NavBar from '../components/Navbars'
+import { ThemeProviderCustom } from '../utils/hooks/ThemeProvider';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,10 +21,15 @@ export default function RootLayout({
   return (
       <html lang="en">
         <body className={`${inter.className} dark:bg-[#000000] bg-white w-screen h-screen`}>
+          <div className='main'>
+            <div className='gradient' />
+          </div>
             <AuthProvider>
               <ThemeProviderCustom>
-                <NavBar />
-                {children}
+                <main className='app'>
+                  <NavBar />
+                  {children}
+                </main>
               </ThemeProviderCustom>
             </AuthProvider>
         </body>
