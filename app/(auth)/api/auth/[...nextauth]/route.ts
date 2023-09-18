@@ -47,10 +47,15 @@ export const authOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         async signIn({ account, profile }) {
+          try{
             if (account.provider === "google") {
               return profile.email_verified && profile.email.endsWith("@gmail.com")
             }
             return true // Do different verification for other providers that don't have `email_verified`
+          } catch (error) {
+            console.log(error);
+            return false;
+          }
           },
         async jwt({ token, user ,account ,trigger , session}) {
           //update user name

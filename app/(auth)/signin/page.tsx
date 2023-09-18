@@ -1,8 +1,7 @@
 "use client";
-import axios from "axios";
 import Link from "next/link"
 import { useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession , signIn } from "next-auth/react"
 import { useRouter } from "next/navigation";
 
 
