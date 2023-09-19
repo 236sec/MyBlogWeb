@@ -48,7 +48,15 @@ export const authOptions = {
     callbacks: {
         async signIn({ account, profile }) {
           try{
+            await connectMongoDB();
             if (account.provider === "google") {
+              
+              if(profile.email){
+                const user = await User.findOne({email:profile.email});
+                if(user){
+                  return true;
+                }
+              }
               return profile.email_verified && profile.email.endsWith("@gmail.com")
             }
             return true // Do different verification for other providers that don't have `email_verified`

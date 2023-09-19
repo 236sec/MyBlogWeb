@@ -8,6 +8,7 @@ import HomeFill from "../public/assets/homefill.svg";
 import { useSession , getProviders } from "next-auth/react";
 import { useEffect , useState } from "react";
 
+
 export default function NavBar(){    
     const theme = useTheme();
     const { data: session , status } = useSession();
