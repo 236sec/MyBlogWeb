@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { ThemeProvider, CssBaseline, Switch, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useColorMode } from '../utils/hooks/ThemeProvider';
-import { useTheme } from '@mui/material';
 
-const ThemeSwitch = () => {
+const ThemeSwitch = ({ theme } : any) => {
   const { toggleColorMode } = useColorMode() as any;
-  const theme = useTheme();
 
 
   const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -57,12 +55,13 @@ const ThemeSwitch = () => {
   }));
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <CssBaseline />
       <div>
         <MaterialUISwitch checked={theme.palette.mode === 'dark'} onChange={toggleColorMode} />
       </div>
-    </ThemeProvider>
+    </>
+      
   );
 };
 

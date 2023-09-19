@@ -34,7 +34,7 @@ export default function NavBar(){
                 <li className=""><Link href={"/signup"}>SignUp</Link></li>
                 <li className=""><Link href={"/dashboard"}>Dashboard</Link></li>
             </ol>
-            <ThemeSwitch />
+            <ThemeSwitch theme={theme} />
             <span>
                 <Image alt="Profile" src={session?.user?.image} width={30} height={30} className="rounded-full" />
             </span>

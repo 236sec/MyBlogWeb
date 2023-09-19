@@ -28,9 +28,9 @@ export default function RootLayout({
             <AuthProvider>
               <ThemeProviderCustom>
                 <main className='app'>
-                  <NavBar />
-                  {children}
+                  
                   <ResponsiveAppBar />
+                  {children}
                 </main>
               </ThemeProviderCustom>
             </AuthProvider>

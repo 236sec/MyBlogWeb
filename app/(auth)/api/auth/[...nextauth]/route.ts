@@ -31,7 +31,7 @@ export const authOptions = {
                 
                 try{
                     await connectMongoDB();
-                    const user = await User.login(username,password);
+                    const user = await User.login({username,password});
                     console.log(user);
                     return user;
                 } catch (error) {
@@ -48,20 +48,27 @@ export const authOptions = {
     callbacks: {
         async signIn({ account, profile }) {
           try{
-            await connectMongoDB();
-            if (account.provider === "google") {
-              
-              if(profile.email){
-                const user = await User.findOne({email:profile.email});
-                if(user){
-                  return true;
+            if(profile.email_verified && profile.email.endsWith("@gmail.com")){
+              await connectMongoDB();
+              if (account.provider === "google") {
+                
+                if(profile.email){
+                  const user = await User.login({email:profile.email,password:""});
+                  if(user){
+                    return true;
+                  }else{
+                    throw Error("Not Found Your Account");
+                    return false;
+                  }
                 }
               }
-              return profile.email_verified && profile.email.endsWith("@gmail.com")
+            }else{
+              throw Error("Your Email is not verified or not gmail.com");
+              return false;
             }
-            return true // Do different verification for other providers that don't have `email_verified`
+            return profile.email_verified && profile.email.endsWith("@gmail.com")
           } catch (error) {
-            console.log(error);
+            console.log(error.message);
             return false;
           }
           },
