@@ -36,7 +36,7 @@ export default function NavBar(){
             </ol>
             <ThemeSwitch theme={theme} />
             <span>
-                <Image alt="Profile" src={session?.user?.image} width={30} height={30} className="rounded-full" />
+                <Image alt="Profile" src={`${session?.user?.image}`} width={30} height={30} className="rounded-full" />
             </span>
         </div>
     )

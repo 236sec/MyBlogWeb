@@ -19,7 +19,7 @@ import ThemeSwitch from './ThemeSwitch';
 import Link from 'next/link';
 
 
-
+const statelogin = ["Dashboard","Logout"];
 const pages = ['Login' , 'SignUp' , 'Dashboard' ];
 const pageLink = ['/api/auth/signin', '/signup', '/dashboard'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -39,9 +39,9 @@ function ResponsiveAppBar() {
             setProviders(res);
         }
         fetchProvidersData();
+        console.log(providers);
     }, [setProviders]);
-
-    console.log(providers);
+    
     console.log(session);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -59,6 +59,7 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  if(!session){
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -112,9 +113,9 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page , ind ) => (
-                <Link href={pageLink[ind]}>
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                <Link href={pageLink[ind]} key={`${ind}`} >
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center" >{page}</Typography>
                   </MenuItem>
                 </Link>
               ))}
@@ -139,9 +140,9 @@ function ResponsiveAppBar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page , ind) => (
-              <Link href={pageLink[ind]}>
+              <Link href={pageLink[ind]} key={`page-${ind}`}>
               <Button
-                key={page}
+                key={`${page}-${ind}`}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
@@ -154,7 +155,7 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Avatar" src={session?.user?.image} />
+                <Avatar alt="Avatar" src={`${session?.user?.image}`} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -184,5 +185,10 @@ function ResponsiveAppBar() {
       </Container>
     </AppBar>
   );
+  }else{
+    return <>
+      <h1>You are Login</h1>
+    </>
+  }
 }
 export default ResponsiveAppBar;

@@ -46,7 +46,7 @@ export const authOptions = {
     },
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
-        async signIn({ account, profile }) {
+        async signIn({ account, profile } : { account: any, profile: any}) {
           try{
             if(profile.email_verified && profile.email.endsWith("@gmail.com")){
               await connectMongoDB();
@@ -67,12 +67,12 @@ export const authOptions = {
               return false;
             }
             return profile.email_verified && profile.email.endsWith("@gmail.com")
-          } catch (error) {
+          } catch (error : any) {
             console.log(error.message);
             return false;
           }
           },
-        async jwt({ token, user ,account ,trigger , session}) {
+        async jwt({ token, user ,account ,trigger , session} : { token: any, user: any, account: any, trigger: any, session: any}) {
           //update user name
             if(trigger === "update" && session?.name){
               token.name = session.name;
@@ -89,13 +89,13 @@ export const authOptions = {
             }
             return token;
           },
-          async session({ session, token, user }) {
+          async session({ session, token, user } : { session: any, token: any, user: any}) {
             // Send properties to the client, like an access_token from a provider.
             console.log("Session CALLBACK ",token);
             return {
               ...session,
               user: {
-                ...session.user,
+                ...session.user, //Update the user object
                 id: token.id,
                 name: token.name,
               }
