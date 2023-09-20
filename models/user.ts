@@ -43,9 +43,9 @@ export interface IUser extends Document {
 
 UserSchema.statics.signup = async function({ username , password , name , email } : IUser){
     console.log("Checking",username,password,name,email);
-    if(!username || !password || !name || !email ){throw Error("All Fields must be filled")}
+    if(!username || !password || !name || !email ){throw new Error("All Fields must be filled")}
     const exits = await this.findOne({username});
-    if (exits){ throw Error("This username has already used") };
+    if (exits){ throw new Error("This username has already used") };
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password,salt);
     const newUser = new this({username,password:hashPassword,name,email});
@@ -60,7 +60,7 @@ UserSchema.statics.login = async function({email , username , password} : {email
         if (userDoc){
             return userDoc;
         }else{
-            throw Error("Do not found your Email In user.ts");
+            throw new Error("Do not found your Email In user.ts");
         }
     }else{
         const userDoc = await this.findOne({username});
@@ -68,10 +68,10 @@ UserSchema.statics.login = async function({email , username , password} : {email
             if(bcrypt.compareSync(password, userDoc.password)){
                 return userDoc;
             }else{
-                throw Error("Incorrect Password");
+                throw new Error("Incorrect Password");
             }
         }else{
-            throw Error("Not Found Your Account");
+            throw new Error("Not Found Your Account");
         }
     }
 }

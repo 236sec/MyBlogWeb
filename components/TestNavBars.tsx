@@ -29,7 +29,7 @@ function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const theme = useTheme();
-    const { data: session , status } = useSession();
+    const { data: session , status } = useSession() as any;
     const [providers , setProviders] = React.useState(null);
 
 
