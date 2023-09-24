@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import mongoose,{ Document, model, models } from 'mongoose';
 
 const PostSchema = new mongoose.Schema({
@@ -17,7 +16,7 @@ const PostSchema = new mongoose.Schema({
         required: [true , "Title is required"],
     },
     tag: {
-        type: String,
+        type: [String],
         required: false,
     },
     content: {
@@ -40,15 +39,15 @@ export interface IPost extends Document {
         image: string,
     },
     title: string,
-    tag: string,
+    tag: [string],
     content: string,
     createdAt: Date,
     updatedAt: Date,
 }
 
-PostSchema.statics.update = async function({ content , updatedAt , ...info} : IPost){
-    console.log("Checking",info,content,updatedAt);
-    if(!info || !content || !updatedAt ){
+PostSchema.statics.update = async function({ title , tag , content , updatedAt , ...info} : IPost){
+    console.log("Checking",info._id,title);
+    if(!content || !title ){
         throw new Error("All Fields must be filled");
     }
     const postDoc = await this.findById(info._id);
@@ -56,11 +55,14 @@ PostSchema.statics.update = async function({ content , updatedAt , ...info} : IP
         throw new Error("This post does not exist");
     }
     postDoc.content = content;
+    postDoc.title = title;
+    postDoc.tag = tag;
+    postDoc.updatedAt = Date.now();
     await postDoc.save();
-    console.log("Update", info, content, updatedAt);
+    console.log("Update",info._id, title);
 }
 
-PostSchema.statics.create = async function( { user , title , tag , content } : { user: { name: string, image: string }, title: string, tag: string, content: string } ){
+PostSchema.statics.create = async function( { user , title , tag , content } : { user: { name: string, image: string }, title: string, tag: [string], content: string } ){
     if(!user || !title || !tag || !content){
         throw new Error("All Fields must be filled")
     }

@@ -74,3 +74,15 @@
 .app {
   @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
 }
+
+input {
+  @apply bg-white dark:bg-black border-black border-2 text-xl p-1 pl-2 rounded-md
+}
+
+.errorbox {
+  @apply bg-red text-white rounded-md p-2 text-sm
+}
+
+.submitbox {
+  @apply p-1 border-2 rounded-xl text-xl text-white bg-primary_variants_light dark:bg-sky dark:hover:bg-[#0369a1] hover:cursor-pointer hover:bg-primary_light border-black text-center
+}
