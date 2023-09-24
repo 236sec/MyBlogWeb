@@ -29,10 +29,14 @@ export async function POST(req:Request) {
 export async function GET(req:Request) {
     const { searchParams } = new URL(req.url)
     const id = searchParams.get('id')
+    console.log("Try to Search",id);
     try{
         if(id){
             await connectMongoDB();
             const posts = await PostsModel.findById(id);
+            if(!posts){
+                return NextResponse.json({ message: "Post not found."},{status : 404 });
+            }
             return NextResponse.json(posts,{status : 200 });
         }
         else{

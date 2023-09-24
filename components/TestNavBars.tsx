@@ -20,8 +20,8 @@ import Link from 'next/link';
 
 
 const statelogin = ["Dashboard","Logout"];
-const pages = ['Login' , 'SignUp' , 'Dashboard','CreatePost' ];
-const pageLink = ['/api/auth/signin', '/signup', '/dashboard',"/createpost"];
+const pages = ['Login' , 'SignUp' , 'Dashboard','CreatePost',"Blog" ];
+const pageLink = ['/api/auth/signin', '/signup', '/dashboard',"/createpost","/blog"];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
