@@ -1,5 +1,4 @@
 "use client";
-import {useTheme} from "next-themes";
 import {useState,useEffect} from "react";
 
 export default function DashBoardPage(){
