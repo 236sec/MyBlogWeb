@@ -2,7 +2,6 @@ import '../styles/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import AuthProvider from '../utils/hooks/SessionProviders'
-import NavBar from '../components/Navbars'
 import ResponsiveAppBar from '@/components/TestNavBars'
 import { ThemeProviderCustom } from '../utils/hooks/ThemeProvider';
 
