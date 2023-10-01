@@ -1,6 +1,6 @@
 import Markdown from "@/components/Markdown"
 
-export default function () {
+export default function MarkdownPage(){
     const content = `Here is some JavaScript code:
 
 ~~~python

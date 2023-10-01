@@ -1,6 +1,6 @@
 import CreatePostForm from "@/components/CreatePostForm";
 
-export default function () {
+export default function CreatePostPage() {
     return (
         <div>
             <CreatePostForm />

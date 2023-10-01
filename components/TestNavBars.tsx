@@ -37,9 +37,9 @@ function ResponsiveAppBar() {
         const fetchProvidersData = async () => {
             const res = await getProviders() as any;
             setProviders(res);
+            console.log(res);
         }
         fetchProvidersData();
-        console.log(providers);
     }, [setProviders]);
     
     console.log(session);

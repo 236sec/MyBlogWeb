@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth/next"
 import { authOptions } from "./auth/[...nextauth]/route"
 
 
-export default async (req : any, res : any) => {
+export default async function reti(req : any, res : any) {
   const session = await getServerSession(req, res, authOptions as any)
   if (session) {
     res.send({
