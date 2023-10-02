@@ -4,21 +4,30 @@ import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { connectMongoDB } from "@/lib/mongodb";
 import User from "@/models/user";
+//import User from "@/models/test";
 
 interface UserCredentials { 
     username : string, 
     password : string,
 }
 
+interface User {
+    username: string,
+    password: string,
+    name: string,
+    email: string,
+}
+
+
 export const authOptions : NextAuthOptions = {
     providers: [
         GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
           }),
         GitHubProvider({
-            clientId: process.env.GITHUB_ID,
-            clientSecret: process.env.GITHUB_SECRET
+            clientId: process.env.GITHUB_ID as string,
+            clientSecret: process.env.GITHUB_SECRET as string,
           }),
         CredentialsProvider({
             name:"credentials",
@@ -42,11 +51,11 @@ export const authOptions : NextAuthOptions = {
     ],
     session: {
         strategy: "jwt",
-        jwt: true,
+        //jwt: true,
     },
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
-        async signIn({ account, profile } : { account: any, profile: any}) {
+        async signIn({ account, profile } : { account?: any, profile?: any}) {
           try{
             if(profile.email_verified && profile.email.endsWith("@gmail.com")){
               await connectMongoDB();
@@ -72,7 +81,7 @@ export const authOptions : NextAuthOptions = {
             return false;
           }
           },
-        async jwt({ token, user ,account ,trigger , session} : { token: any, user: any, account: any, trigger: any, session: any}) {
+        async jwt({ token, user ,account ,trigger , session} : { token?: any, user?: any, account?: any, trigger?: any, session?: any}) {
           //update user name
             if(trigger === "update" && session?.name){
               token.name = session.name;

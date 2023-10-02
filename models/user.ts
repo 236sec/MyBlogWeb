@@ -34,12 +34,20 @@ const UserSchema = new mongoose.Schema({
     },
 });
 
-export interface IUser extends Document {
+export interface DUser extends Document {
     username: string,
     password: string,
     email: string,
     name: string,
 }
+
+export interface IUser {
+    username: string;
+    password: string;
+    name: string;
+    email: string;
+}
+
 
 UserSchema.statics.signup = async function({ username , password , name , email } : IUser){
     console.log("Checking",username,password,name,email);
@@ -77,6 +85,6 @@ UserSchema.statics.login = async function({email , username , password} : {email
 }
 
 
-const User = models.Users || model<IUser>('Users', UserSchema);
+const User = (models.Users as any )|| model<DUser>('Users', UserSchema);
 
 export default User;

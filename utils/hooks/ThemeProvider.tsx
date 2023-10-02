@@ -11,7 +11,7 @@ const getDesignTokens = (mode : any) => {
   };
 };
 
-const ThemeContext = createContext();
+const ThemeContext = createContext('light');
 
 const lightTheme = createTheme(getDesignTokens('light'));
 
@@ -46,7 +46,7 @@ const ThemeProviderCustom = ({ children } : any) => {
   const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
   return (
-    <ThemeContext.Provider value={colorMode}>
+    <ThemeContext.Provider value={colorMode as any}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {children}

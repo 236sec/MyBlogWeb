@@ -28,7 +28,7 @@ export default function SignInForm() {
                 password,
                 redirect:false,
             })
-            if(res.error){
+            if(res && res.error){
                 setError("Invalid Credentials");
                 return
             }
