@@ -4,7 +4,6 @@ import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { connectMongoDB } from "@/lib/mongodb";
 import User from "@/models/user";
-//import User from "@/models/test";
 
 interface UserCredentials { 
     username : string, 
@@ -61,6 +60,17 @@ export const authOptions : NextAuthOptions = {
               await connectMongoDB();
               if (account.provider === "google") {
                 
+                if(profile.email){
+                  const user = await User.login({email:profile.email,password:""});
+                  if(user){
+                    return true;
+                  }else{
+                    throw Error("Not Found Your Account");
+                    return false;
+                  }
+                }
+              }
+              if(account.provider === "github"){
                 if(profile.email){
                   const user = await User.login({email:profile.email,password:""});
                   if(user){
